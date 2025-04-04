@@ -5,6 +5,8 @@ import { WorkspaceSidebar } from "@/components/workspaces/workspace";
 import WorkspaceHeader from "@/components/ui/header";
 import { workspaceService } from "../../../services/work-space";
 import { nameService } from "../../../services/profile";
+import FavoriteMenu from "@/components/ui/favorite";
+import HeaderComponent from "@/components/ui/headercontainer";
 export default async function RootLayout({ children, searchParams }) {
   // console.log("searchParams",await searchParams);
   const workspaceName = (await searchParams)?.workspaceName;
@@ -31,17 +33,23 @@ export default async function RootLayout({ children, searchParams }) {
               {/* {token} */}
               <WorkspaceSidebar workspace={workspace} />
             </div>
+            <div className="h-[300px] mr-10 mt-20">
+              <FavoriteMenu />
+            </div>
           </div>
           <div className="col-span-9">
             <div className="flex items-center my-20 justify-between w-[90%]">
               <div className="">
-                <WorkspaceHeader workspaceName={workspaceName}/>
+                <WorkspaceHeader workspaceName={workspaceName} />
               </div>
               <div>
                 <UserProfile getUser={getUser} />
               </div>
             </div>
             <div className="grid grid-cols-9 gap-10 w-[90%] ">
+              <div className="w-full h-full col-span-9 ">
+                <HeaderComponent />
+              </div>
               <div className="col-span-9 w-full ">{children}</div>
             </div>
           </div>

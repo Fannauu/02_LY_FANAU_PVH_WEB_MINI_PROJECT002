@@ -6,13 +6,14 @@ const WorkspaceHeader = ({ workspaceName }) => {
   return (
     <div className="flex items-center p-4 bg-white border-b border-gray-200 w-full">
       <div className="flex items-center text-sm font-medium">
-        <span className="text-gray-600 hover:text-gray-900 cursor-pointer">
+        <span className="text-gray-600 hover:text-gray-900 cursor-pointer font-semibold text-2xl">
           workspace
           {/* {workspaceNameList} */}
         </span>
         <ChevronRight className="h-4 w-4 mx-1 text-gray-400" />
-        <span className="text-blue-600 font-medium cursor-pointer">
+        <span className="text-blue-600 font-medium cursor-pointer ml-5 text-2xl">
           {/* {currentSection || space} */}
+          HRD  Design
         </span>
         {/* <span>{workspace.workspaceName}</span> */}
       </div>
