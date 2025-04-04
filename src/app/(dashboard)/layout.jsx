@@ -4,6 +4,7 @@ import UserProfile from "@/components/ui/profiles";
 import { WorkspaceSidebar } from "@/components/workspaces/workspace";
 import WorkspaceHeader from "@/components/ui/header";
 import { workspaceService } from "../../../services/work-space";
+import { nameService } from "../../../services/profile";
 export default async function RootLayout({ children, searchParams }) {
   // console.log("searchParams",await searchParams);
   const workspaceName = (await searchParams)?.workspaceName;
@@ -12,6 +13,12 @@ export default async function RootLayout({ children, searchParams }) {
   //  console.log("Workspace Name from URL:", workspaceName);
 
   const workspace = await workspaceService();
+
+  const getUser = await nameService();
+
+  // console.log("firstName", getUser);
+
+  // console.log("workspace", workspace);
   return (
     <html lang="en">
       <body>
@@ -31,7 +38,7 @@ export default async function RootLayout({ children, searchParams }) {
                 <WorkspaceHeader workspaceName={workspaceName}/>
               </div>
               <div>
-                <UserProfile />
+                <UserProfile getUser={getUser} />
               </div>
             </div>
             <div className="grid grid-cols-9 gap-10 w-[90%] ">

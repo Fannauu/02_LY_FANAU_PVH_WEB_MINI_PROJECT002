@@ -10,7 +10,7 @@ export const WorkspaceSidebar = ({
   onRenameWorkspace,
   
 }) => {
-  const workspaceList = workspace.payload;
+  const workspaceList = workspace?.payload;
   const [showPopup, setShowPopup] = useState(false);
   const [activeDropdownIndex, setActiveDropdownIndex] = useState(null);
   const [workspaceName, setWorkspaceName] = useState("");

@@ -25,7 +25,7 @@ export const workspaceService = async () => {
     // console.log("getWorkspace", data);
     return data;
   } catch (error) {
-    console.error("Error fetching workspace:", error.message);
+    // console.error("Error fetching workspace:", error.message);
     return null;
   }
 };
@@ -155,7 +155,7 @@ export async function createWorkspace({ workspaceName }) {
 export async function getTaskByWorkspaceId(workspaceTasksid) {
   // console.log("workspace id", workspaceTasksid);
 
-  try {
+  // try {
     // if (!workspaceId || typeof workspaceId !== "string") {
     //   throw new Error("Invalid workspace ID");
     // }
@@ -190,18 +190,17 @@ export async function getTaskByWorkspaceId(workspaceTasksid) {
 
     const data = await res.json();
     return data;
-  } catch (error) {
-    console.error(
-      `Error fetching workspace with ID ${workspaceTasksid}:`,
-      error
-    );
-    throw error;
-  }
+  // } catch (error) {
+  //   console.error(
+  //     `Error fetching workspace with ID ${workspaceTasksid}:`,
+  //     error
+  //   );
+  //   throw error;
+  // }
 }
 
 
 export async function updateWorkspaceById(workspaceTasksid) {
-
 
   const res = await fetch(`http://96.9.81.187:8080/api/v1/workspace/${workspaceTasksid}`);
 

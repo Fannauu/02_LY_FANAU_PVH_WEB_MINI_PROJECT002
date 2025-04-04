@@ -1,10 +1,13 @@
 import React from "react";
 
-const UserProfile = ({ name, email, imageUrl }) => {
-  // Get initials if no image is provided
+const UserProfile = ({ getUser }) => {
+  console.log("getUser", getUser);
+  const { username, email, profile } = getUser || {};
+
+  // Get initials from username if no image is provided
   const getInitials = () => {
-    if (!name) return "";
-    return name
+    if (!username) return "";
+    return username
       .split(" ")
       .map((word) => word[0])
       .join("")
@@ -14,10 +17,10 @@ const UserProfile = ({ name, email, imageUrl }) => {
   return (
     <div className="flex items-center p-2">
       <div className="relative">
-        {imageUrl ? (
+        {profile ? (
           <img
-            src={imageUrl}
-            alt={`${name}'s profile`}
+            src={profile}
+            alt={`${username}'s profile`}
             className="w-8 h-8 rounded-full object-cover"
           />
         ) : (
@@ -29,7 +32,7 @@ const UserProfile = ({ name, email, imageUrl }) => {
       </div>
 
       <div className="ml-2">
-        <div className="text-sm font-medium text-gray-900">{name}</div>
+        <div className="text-sm font-medium text-gray-900">{username}</div>
         <div className="text-xs text-blue-600">{email}</div>
       </div>
     </div>
