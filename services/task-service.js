@@ -20,8 +20,8 @@ export default async function createTask({
         Authorization: `Bearer ${session.token}`,
       },
       next: {
-        tags: [`workspace-${workspaceId}`],
-        revalidate: 60,
+        tags: [`workspace`],
+        revalidate: 0,
       },
       body: JSON.stringify({
         taskTitle: taskTitle,

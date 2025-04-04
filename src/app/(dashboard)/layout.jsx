@@ -1,12 +1,16 @@
 import Logo from "@/components/logo";
 import "../globals.css";
-import WorkspaceHeader from "@/components/ui/header";
 import UserProfile from "@/components/ui/profiles";
-import CardComponent from "@/components/card";
-import { workspaceService } from "../../../services/work-space";
 import { WorkspaceSidebar } from "@/components/workspaces/workspace";
-import NewTaskButton from "@/components/ui/create-button";
-export default async function RootLayout({ children }) {
+import WorkspaceHeader from "@/components/ui/header";
+import { workspaceService } from "../../../services/work-space";
+export default async function RootLayout({ children, searchParams }) {
+  // console.log("searchParams",await searchParams);
+  const workspaceName = (await searchParams)?.workspaceName;
+  // console.log("workspaceName", workspaceName);
+  //  const workspaceName = await searchParams.workspaceName; // Access the query param here
+  //  console.log("Workspace Name from URL:", workspaceName);
+
   const workspace = await workspaceService();
   return (
     <html lang="en">
@@ -24,13 +28,12 @@ export default async function RootLayout({ children }) {
           <div className="col-span-9">
             <div className="flex items-center my-20 justify-between w-[90%]">
               <div className="">
-                <WorkspaceHeader />
+                <WorkspaceHeader workspaceName={workspaceName}/>
               </div>
               <div>
                 <UserProfile />
               </div>
             </div>
-
             <div className="grid grid-cols-9 gap-10 w-[90%] ">
               <div className="col-span-9 w-full ">{children}</div>
             </div>

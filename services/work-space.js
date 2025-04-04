@@ -30,6 +30,83 @@ export const workspaceService = async () => {
   }
 };
 
+// get workspace id
+
+export const getWorkspaceId = async (workspaceId) => {
+  try {
+    const response = await fetch(
+      `http://96.9.81.187:8080/api/v1/workspace/${workspaceId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch workspace");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching workspace:", error);
+    throw error;
+  }
+};
+
+// update 
+export const updateWorkspace = async (workspaceId, workspaceName) => {
+  try {
+    const response = await fetch(
+      `http://96.9.81.187:8080/api/v1/workspace/${workspaceId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ workspaceName }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to update workspace");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error updating workspace:", error);
+    throw error;
+  }
+};
+
+// deleted
+
+export const deleteWorkspace = async (workspaceId) => {
+  try {
+    const response = await fetch(
+      `http://96.9.81.187:8080/api/v1/workspace/${workspaceId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to delete workspace");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error deleting workspace:", error);
+    throw error;
+  }
+};
+
 export async function createWorkspace({ workspaceName }) {
   try {
     // Validate input
@@ -76,7 +153,7 @@ export async function createWorkspace({ workspaceName }) {
 }
 
 export async function getTaskByWorkspaceId(workspaceTasksid) {
-  console.log("workspace id", workspaceTasksid);
+  // console.log("workspace id", workspaceTasksid);
 
   try {
     // if (!workspaceId || typeof workspaceId !== "string") {
@@ -121,3 +198,34 @@ export async function getTaskByWorkspaceId(workspaceTasksid) {
     throw error;
   }
 }
+
+
+export async function updateWorkspaceById(workspaceTasksid) {
+
+
+  const res = await fetch(`http://96.9.81.187:8080/api/v1/workspace/${workspaceTasksid}`);
+
+}
+// not yet done 
+export const getDataByworkspaceId = async (workspaceTasksid) => {
+
+  const session = await auth();
+  const res = await fetch(
+    `http://96.9.81.187:8080/api/v1/workspace/${workspaceTasksid}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "*/*",
+        Authorization: `Bearer ${session.token}`,
+        "Content-Type": "application/json",
+      },
+      next: {
+        tags: ["getDatabyworkspaceId"], // Tag this request for revalidation
+        revalidate: 0, // Do not cache the response
+      },
+    }
+  );
+
+  const data = await res.json();
+  return data;
+};

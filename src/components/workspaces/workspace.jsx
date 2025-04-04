@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { WorkspaceForm } from "./workspace-form";
-import Link from "next/link";
-import { getWorkspaceById } from "../../../services/work-space";
 import { useRouter } from "next/navigation";
 
 export const WorkspaceSidebar = ({
@@ -73,11 +71,29 @@ export const WorkspaceSidebar = ({
 
   const router = useRouter();
   
-  const handleNavigate = (workspaceId) => {
-    router.push(`/dashboard/${workspaceId}`);
+  const handleNavigate = (workspaceId,workspaceName) => {
+    router.push(`/dashboard/${workspaceId}?workspaceName=${workspaceName}`);
   };
 
 
+
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [renameIndex, setRenameIndex] = useState(null);
+  const [newName, setNewName] = useState("");
+  // const dropdownRef = useRef(null);
+  const handleRenameSubmit = async () => {
+    try {
+      if (newName && newName !== workspaceList[renameIndex].workspaceName) {
+        const workspaceId = workspaceList[renameIndex].workspaceId;
+        await updateWorkspace(workspaceId, newName);
+        // Update local state would go here if you have a setter
+        setIsRenaming(false);
+        setActiveDropdownIndex(null);
+      }
+    } catch (error) {
+      alert("Failed to rename workspace. Please try again.");
+    }
+  };
 
 
   return (
@@ -118,7 +134,9 @@ export const WorkspaceSidebar = ({
                   }}></div>
 
                 <p
-                  onClick={() => handleNavigate(item.workspaceId)}
+                  onClick={() =>
+                    handleNavigate(item.workspaceId, item.workspaceName)
+                  }
                   className="text-gray-800 font-medium">
                   {item.workspaceName}
                 </p>
@@ -147,6 +165,54 @@ export const WorkspaceSidebar = ({
                   <div
                     ref={dropdownRef}
                     className="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-10 w-48 py-1 border border-gray-200">
+                    {!isRenaming ? (
+                      <>
+                        <button
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() =>
+                            handleOpenRenamePopup(index, item.workspaceName)
+                          }>
+                          Rename Workspace
+                        </button>
+                        <button
+                          type="submit"
+                          className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                          Delete Workspace
+                        </button>
+                      </>
+                    ) : (
+                      <div className="px-4 py-2">
+                        <input
+                          type="text"
+                          value={newName}
+                          onChange={(e) => setNewName(e.target.value)}
+                          className="w-full text-sm border rounded px-2 py-1 mb-2"
+                          autoFocus
+                        />
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={handleRenameSubmit}
+                            className="text-sm text-gray-700 hover:text-gray-900">
+                            Save
+                          </button>
+                          <button
+                            onClick={() => {
+                              setIsRenaming(false);
+                              setActiveDropdownIndex(null);
+                            }}
+                            className="text-sm text-gray-700 hover:text-gray-900">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* {activeDropdownIndex === index && (                  
+                  <div
+                    ref={dropdownRef}
+                    className="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-10 w-48 py-1 border border-gray-200">
                     <button
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() =>
@@ -160,7 +226,7 @@ export const WorkspaceSidebar = ({
                       Delete Workspace
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           ))}

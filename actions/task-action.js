@@ -1,23 +1,7 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import createTask from "../services/task-service";
-
-// export async function tasksAction(workspaceId, _, formData) {
-//   console.log("workspaceId : ", workspaceId);
-//   const title = formData.get("title");
-//   const description = formData.get("description");
-//   const priority = formData.get("priority");
-//   const dueDate = formData.get("dueDate");
-
-//   const res = await createTask({ workspaceId, title, description, priority, dueDate });
-//   console.log("ress", res);
-
-//   return res.json();
-// }
-
-// "use server";
-
-// import createTask from "../services/task-service";
 
 export async function tasksAction(workspaceId, _, formData) {
   console.log("workspaceId:", workspaceId);
@@ -34,7 +18,6 @@ export async function tasksAction(workspaceId, _, formData) {
     tag,
     endDate,
   });
-  revalidateTag("workspaces");
-
-  return res.json();
+  revalidateTag("tasks");
+  return res;
 }
