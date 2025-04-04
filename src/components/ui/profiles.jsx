@@ -21,10 +21,10 @@ const UserProfile = ({ getUser }) => {
           <img
             src={profile}
             alt={`${username}'s profile`}
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-15 h-15 rounded-full object-cover"
           />
         ) : (
-          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium">
+          <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-medium">
             {getInitials()}
           </div>
         )}
@@ -32,8 +32,8 @@ const UserProfile = ({ getUser }) => {
       </div>
 
       <div className="ml-2">
-        <div className="text-sm font-medium text-gray-900">{username}</div>
-        <div className="text-xs text-blue-600">{email}</div>
+        <div className="text-lg font-semibold text-gray-900">{username}</div>
+        <div className="text-lg text-blue-600">{email}</div>
       </div>
     </div>
   );

@@ -24,9 +24,9 @@ export default async function RootLayout({ children, searchParams }) {
   return (
     <html lang="en">
       <body>
-        <div className="grid grid-cols-12 relative">
+        <div className="grid grid-cols-12 relative ">
           <div className="col-span-3 ">
-            <div className="flex items-center justify-self-center my-20">
+            <div className="flex items-center justify-center my-20">
               <Logo />
             </div>
             <div className="h-[300px] overflow-y-auto mr-10">
